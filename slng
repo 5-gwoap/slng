@@ -1,0 +1,22 @@
+#!/usr/bin/bash
+
+# Bind search string to first argument.
+SEARCH_STRING="$1"
+
+# Describe desired results.
+RESULT_SCHEMA="{
+    Word: .word,
+    Def: .definition,
+    Ayys: .thumbs_up,
+    Nayys: .thumbs_down
+  }"
+
+# Bind results object to API response object as Array.
+RESULTS_OBJ=$(curl -sS "http://api.urbandictionary.com/v0/define?term=$SEARCH_STRING" | jq '.list')
+
+echo "$RESULTS_OBJ"
+
+# Print the first three results.
+echo "$RESULTS_OBJ" | jq ".[0] | $RESULT_SCHEMA"
+echo "$RESULTS_OBJ" | jq ".[1] | $RESULT_SCHEMA"
+echo "$RESULTS_OBJ" | jq ".[2] | $RESULT_SCHEMA"
