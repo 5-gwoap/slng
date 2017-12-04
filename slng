@@ -1,7 +1,12 @@
 #!/usr/bin/bash
 
 # Bind search string to first argument.
-SEARCH_STRING="$1"
+if [ -z "$1" ]; then
+  echo "Please enter a search string."
+  exit 0
+else
+  SEARCH_STRING="$1"
+fi
 
 # Describe desired results.
 RESULT_SCHEMA="{
@@ -13,8 +18,6 @@ RESULT_SCHEMA="{
 
 # Bind results object to API response object as Array.
 RESULTS_OBJ=$(curl -sS "http://api.urbandictionary.com/v0/define?term=$SEARCH_STRING" | jq '.list')
-
-echo "$RESULTS_OBJ"
 
 # Print the first three results.
 echo "$RESULTS_OBJ" | jq ".[0] | $RESULT_SCHEMA"
