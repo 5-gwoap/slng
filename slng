@@ -3,9 +3,13 @@
 # Bind search string to first argument.
 if [ -z "$1" ]; then
   echo "Please enter a search string."
-  exit 0
+  exit 1
+elif [ ! -z "$2" ]; then
+  echo "Look's like you have more than one word in your search. If you're attempting to search a phrase, please wrap your search in quotation marks."
+  exit 1
 else
   SEARCH_STRING="$1"
+  SEARCH_STRING=${SEARCH_STRING// /+}
 fi
 
 # Describe desired results.
