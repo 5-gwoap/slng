@@ -9,14 +9,10 @@ class bcolors:
     """
         Add color properties to prnt statements
     """
-    BOLD = '\033[1m'
     ENDC = '\033[0m'
-    FAIL = '\033[91m'
-    HEADER = '\033[95m'
-    OKBLUE = '\033[94m'
+    RED = '\033[91m'
+    PURPLE = '\033[95m'
     OKGREEN = '\033[92m'
-    UNDERLINE = '\033[4m'
-    WARNING = '\033[93m'
 
 def get_word(word):
     """
@@ -37,7 +33,7 @@ def print_definitions(word):
         defLength = 3
         print(f'You entered "{word}" and these are the top 3 results:\n')
     elif len(definitions) == 0:
-        print(bcolors.FAIL + "ERROR: " + bcolors.ENDC + "No entries found, for " + bcolors.HEADER + word + bcolors.ENDC)
+        print(bcolors.RED + "ERROR: " + bcolors.ENDC + "No entries found, for " + bcolors.PURPLE + word + bcolors.ENDC)
         get_input()
     else:
         defLength = len(definitions)
@@ -46,10 +42,10 @@ def print_definitions(word):
         obj = definitions[i]
 
         print('========================================================')
-        print(f'Word: ' + bcolors.HEADER + str(obj["word"]) + bcolors.ENDC)
-        print(f'Definition: ' + bcolors.HEADER + obj["definition"] + bcolors.ENDC)
+        print(f'Word: ' + bcolors.PURPLE + str(obj["word"]) + bcolors.ENDC)
+        print(f'Definition: ' + bcolors.PURPLE + obj["definition"] + bcolors.ENDC)
         print(f'Score: {obj["thumbs_up"] - obj["thumbs_down"]}')
-        print('Ayys: ' + bcolors.OKGREEN + str(obj["thumbs_up"]) + bcolors.ENDC + ' | Nayys: ' + bcolors.FAIL + str(obj["thumbs_down"]) + bcolors.ENDC)
+        print('Ayys: ' + bcolors.OKGREEN + str(obj["thumbs_up"]) + bcolors.ENDC + ' | Nayys: ' + bcolors.RED + str(obj["thumbs_down"]) + bcolors.ENDC)
 
 def get_input():
     """
