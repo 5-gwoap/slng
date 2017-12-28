@@ -5,7 +5,12 @@
 Create a symbolic link script executable to a directory in your path, e.g.:
 
 ```
-ln -s $PATH/TO/REPO/slng/slng /bin/slng
+ln -s $PATH_TO_REPO/slng/slng /bin/slng
+```
+If slng is not executable, run the following command:
+
+```
+chmod +x $PATH_TO_REPO/slng/slng
 ```
 
 #### Usage
