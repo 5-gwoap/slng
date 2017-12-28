@@ -2,17 +2,21 @@
 """
 	Runs as a command line script
 """
-import sys
+import os, sys
 import requests
 
 class bcolors:
 	"""
-		Add color properties to prnt statements
+		Add color properties to print statements
 	"""
 	ENDC = '\033[0m'
 	RED = '\033[91m'
 	PURPLE = '\033[95m'
 	OKGREEN = '\033[92m'
+
+def get_width():
+	columns = os.popen('stty size', 'r').read().split()[1]
+	return int(columns)
 
 def get_word(word):
 	"""
@@ -20,6 +24,7 @@ def get_word(word):
 	"""
 	req = requests.get(
 		'http://api.urbandictionary.com/v0/define?', {'term': word})
+
 	return req.json()['list']
 
 
@@ -34,14 +39,15 @@ def print_definitions(word):
 		print(f'You entered "{word}" and these are the top 3 results:\n')
 	elif len(definitions) == 0:
 		print(bcolors.RED + "ERROR: " + bcolors.ENDC + "No entries found, for " + bcolors.PURPLE + word + bcolors.ENDC)
-		get_input()
+		print('=' * get_width())
+		sys.exit()
 	else:
 		defLength = len(definitions)
 
 	for i in range(0, defLength):
 		obj = definitions[i]
 
-		print('========================================================')
+		print('=' * get_width())
 		print(f'Word: ' + bcolors.PURPLE + str(obj["word"]) + bcolors.ENDC)
 		print(f'Definition: ' + bcolors.PURPLE + obj["definition"] + bcolors.ENDC)
 		print(f'Score: {obj["thumbs_up"] - obj["thumbs_down"]}')
@@ -52,8 +58,7 @@ def get_input(words_to_lookup):
 		Parent function for this script.
 		Gets input string from user and returns 3 definitions.
 	"""
-	# while True:
-	print('========================================================')
+	print('=' * get_width())
 	print(words_to_lookup)
 	if not words_to_lookup:
 		print(
